@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "contract": "/pages/contract/contract",
+    "courier-index": "/pages/courier-index/courier-index",
+    "add-courier": "/pages/courier-index/add-courier",
+    "user": "/pages/user/user"
+  }
+}

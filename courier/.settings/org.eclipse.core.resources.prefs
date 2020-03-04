@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/com/xhr/courier/service/WebSocketService.java=UTF-8
+encoding//src/main/java/com/xhr/courier/tools/MD5.java=UTF-8
+encoding//src/main/java/com/xhr/courier/tools/PaymentUtil.java=UTF-8
+encoding//src/main/java/com/xhr/courier/tools/result/ResultCode.java=UTF-8
+encoding//src/main/java/com/xhr/courier/tools/result/ResultGenerator.java=UTF-8
+encoding//src/main/resource/application.properties=UTF-8
+encoding//src/test/java=UTF-8
+encoding/<project>=UTF-8

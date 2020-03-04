@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/login/login",
+    "pages/user/register/register",
+    "pages/user/forgot/forgot",
+    "pages/user/modify/modify",
+    "pages/user/info/info",
+    "pages/courier-index/courier-detail",
+    "pages/contract/contract-info",
+    "pages/courier-index/courier-list",
+    "pages/courier-index/courier-edit",
+    "pages/web-view/web-view",
+    "pages/user/forgot/reset-passwor",
+    "pages/user/update-info/update-info"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#0081ff",
+    "navigationBarTitleText": "courier-web",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
+  },
+  "nvueCompiler": "weex",
+  "renderer": "auto",
+  "splashscreen": {
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
+  },
+  "appname": "courier-web",
+  "compilerVersion": "2.2.2",
+  "usingComponents": {
+    "courier-index": "/pages/courier-index/courier-index",
+    "contract": "/pages/contract/contract",
+    "cu-custom": "/colorui/components/cu-custom",
+    "add-courier": "/pages/courier-index/add-courier",
+    "user": "/pages/user/user"
+  }
+}

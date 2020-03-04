@@ -1,0 +1,24 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/login/login",
+    "pages/user/register/register",
+    "pages/user/forgot/forgot",
+    "pages/index/index",
+    "pages/user/modify/modify",
+    "pages/user/info/info"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarBackgroundColor": "#0081ff",
+    "navigationBarTitleText": "ColorUi for UniApp",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
+  },
+  "usingComponents": {
+    "courier-index": "/pages/courier-index/courier-index",
+    "contract": "/pages/contract/contract",
+    "cu-custom": "/colorui/components/cu-custom",
+    "user": "/pages/user/user"
+  }
+}

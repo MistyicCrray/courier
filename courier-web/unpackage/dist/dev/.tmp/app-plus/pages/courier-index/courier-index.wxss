@@ -1,0 +1,19 @@
+
+.page {
+	height: 100vh;
+}
+.my-bottom {
+	margin-bottom: 140rpx;
+}
+.top {
+		position: relative;
+}
+.topc {
+	position: fixed;
+	right: 0;
+	background: #F0F0F0;
+	top: 70%;
+	height: 50px;
+	line-height: 50px;
+}
+

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "you-scroll": "/components/you-scroll/you-scroll"
+  },
+  "component": true
+}
