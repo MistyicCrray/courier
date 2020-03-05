@@ -15,8 +15,8 @@ export const formatDate = (time) => {
 }
 
 //接口地址
-export const baseUrl = 'http://wwwnuhaishduiohkjcc.51vip.biz/main/'
+export const baseUrl = 'http://localhost:8080/'
 // 图片地址
 export const imgUrl = 'http://localhost/static/'
 // 图片上传地址
-export const imgUploadUrl = 'http://wwwnuhaishduiohkjcc.51vip.biz/'
+export const imgUploadUrl = 'http://localhost:8080/'

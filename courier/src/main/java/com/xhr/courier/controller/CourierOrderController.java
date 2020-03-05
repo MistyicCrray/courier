@@ -200,9 +200,9 @@ public class CourierOrderController {
 		// 封装请求支付信息
 		AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
 		model.setOutTradeNo(findById.getId() + "");
-		model.setSubject("蛋壳当家购买");
+		model.setSubject("代领费用");
 		model.setTotalAmount(findById.getPrice());
-		model.setBody("蛋壳当家购买");
+		model.setBody("代领费用");
 		model.setTimeoutExpress(timeout_express);
 		model.setProductCode(product_code);
 		alipay_request.setBizModel(model);

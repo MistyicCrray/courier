@@ -43,7 +43,7 @@
 				<textarea maxlength="-1" v-model="courier.remark" :disabled="modalName!=null" placeholder="备注"></textarea>
 			</view>
 			<view class="cu-bar bg-white tabbar border shop foot">
-				<button class="action" open-type="contact">
+				<button class="action" open-type="contact" @click="toContract">
 					<view class="cuIcon-message text-green">
 					</view>
 					联系
@@ -86,7 +86,8 @@
 					"isBig": '',
 					"address": '',
 					'phone': ''
-				}
+				},
+				userInfo: {}
 			};
 		},
 		onLoad(option) {
@@ -156,9 +157,15 @@
 			},
 			check() {
 				let _this = this;
-				let url = "http://wwwnuhaishduiohkjcc.51vip.biz/courierOrder/alipayH5Pay/" + _this.courier.id
+				let url = "http://localhost:8080/courierOrder/alipayH5Pay/" + _this.courier.id
 				uni.navigateTo({
 					url: "../web-view/web-view?path=" + url
+				})
+			},
+			toContract() {
+				let _this = this;
+				uni.navigateTo({
+					url: "../contract/contract-info?toUserId=" + _this.courier.orderUserId
 				})
 			}
 		}

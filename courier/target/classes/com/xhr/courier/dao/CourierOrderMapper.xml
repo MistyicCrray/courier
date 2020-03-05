@@ -63,21 +63,16 @@
 		update t_courier_order
 		set user_id = #{userId,jdbcType=INTEGER},
 		address_id = #{addressId,jdbcType=VARCHAR},
-		pickup_code =
-		#{pickupCode,jdbcType=VARCHAR},
+		pickup_code = #{pickupCode,jdbcType=VARCHAR},
 		courier = #{courier,jdbcType=VARCHAR},
 		order_id = #{orderId,jdbcType=INTEGER},
 		price = #{price,jdbcType=VARCHAR},
-		remark =
-		#{remark,jdbcType=VARCHAR},
-		create_time =
-		#{createTime,jdbcType=TIMESTAMP},
-		cabinet_time =
-		#{cabinetTime,jdbcType=TIMESTAMP},
+		remark = #{remark,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		cabinet_time = #{cabinetTime,jdbcType=TIMESTAMP},
 		status = #{status,jdbcType=VARCHAR},
 		order_user_id = #{orderUserId,jdbcType=INTEGER}
-		where id =
-		#{id,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
 		resultMap="BaseResultMap">
@@ -127,13 +122,13 @@
 				is_big=#{isBig},
 			</if>
 			<if test="orderUserId != null and orderUserId != ''">
-				order_user_id=#{orderUserId}
+				order_user_id=#{orderUserId},
 			</if>
 			<if test="payStatus != null and payStatus != ''">
-				pay_status=#{payStatus}
+				pay_status=#{payStatus},
 			</if>
 			<if test="price != null and price != ''">
-				price=#{price}
+				price=#{price},
 			</if>
 		</trim>
 		WHERE id=#{id}

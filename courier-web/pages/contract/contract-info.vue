@@ -185,7 +185,7 @@
 					}
 				});
 				uni.pageScrollTo({
-					scrollTop: _this.height,
+					scrollTop: 99999,
 					duration: 300
 				});
 			}
