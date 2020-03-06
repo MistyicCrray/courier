@@ -7,10 +7,6 @@
 				<view>{{courier.courier}}</view>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">取件码</view>
-				<view>{{courier.pickupCode}}</view>
-			</view>
-			<view class="cu-form-group">
 				<view class="title">送往地址</view>
 				<view>{{courier.address}}</view>
 			</view>

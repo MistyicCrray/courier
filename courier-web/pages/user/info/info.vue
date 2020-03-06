@@ -7,7 +7,6 @@
 					<cmd-cel-item title="头像" slot-right arrow @click="chooseImage">
 						<cmd-avatar :src="userInfo.avatar == '' ? 'https://avatar.bbs.miui.com/images/noavatar_small.gif' : userInfo.avatar"></cmd-avatar>
 					</cmd-cel-item>
-					<cmd-cel-item title="昵称" :addon="userInfo.userName" arrow></cmd-cel-item>
 					<cmd-cel-item title="邮箱" :addon="userInfo.email" arrow></cmd-cel-item>
 					<cmd-cel-item title="修改个人信息" @click="updateInfo()" arrow></cmd-cel-item>
 					<cmd-cel-item title="修改密码" @click="fnClick('')" arrow></cmd-cel-item>

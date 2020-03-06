@@ -7,12 +7,38 @@
 				<input placeholder="昵称" name="input" v-model="user.userName"></input>
 			</view>
 			<view class="cu-form-group">
+				<view class="title">专业</view>
+				<input placeholder="专业" name="input" v-model="user.specialty"></input>
+			</view>
+			<view class="cu-form-group">
+				<view class="title">班级</view>
+				<input placeholder="班级" name="input" v-model="user.className"></input>
+			</view>
+			<view class="cu-form-group">
 				<view class="title">手机号</view>
 				<input placeholder="手机号" name="input" v-model="user.phone"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">电子邮件</view>
 				<input placeholder="电子邮件" name="input" v-model="user.email"></input>
+			</view>
+			<view class="cu-bar bg-white margin-top">
+				<view class="action">
+					学生证
+				</view>
+			</view>
+			<view class="cu-form-group">
+				<view class="grid col-4 grid-square flex-sub">
+					<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
+						<image :src="userInfo.studentIdCard == '' ? imgList[index] : imgUrl + userInfo.studentIdCard" mode="aspectFill"></image>
+						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
+							<text class='cuIcon-close'></text>
+						</view>
+					</view>
+					<view class="solids" @tap="ChooseImage" v-if="imgList.length < 4">
+						<text class='cuIcon-cameraadd'></text>
+					</view>
+				</view>
 			</view>
 			<button class="btn-register" @tap="submit()">提交</button>
 		</cmd-page-body>
@@ -27,6 +53,12 @@
 	import {
 		getRquest
 	} from "@/api.js"
+	import {
+		imgUploadUrl
+	} from "@/config.js"
+	import {
+		imgUrl
+	} from '@/config'
 	export default {
 		components: {
 			cmdNavBar,
@@ -41,7 +73,11 @@
 					"phone": "",
 					"email": ""
 				},
-				userInfo: {}
+				userInfo: {},
+				imgList: [],
+				imgPath: "",
+				token: "",
+				imgUrl: imgUrl
 			};
 		},
 		onLoad() {
@@ -51,6 +87,12 @@
 				key: 'userInfo',
 				success(res) {
 					_this.userInfo = res.data;
+				}
+			})
+			uni.getStorage({
+				key: 'accessToken',
+				success: function(res) {
+					_this.token = res.data;
 				}
 			})
 		},
@@ -79,6 +121,20 @@
 				});
 				let url = "user/updateCurUser";
 				let params = _this.user;
+				uni.uploadFile({
+					url: imgUploadUrl + 'user/changeStudentIdCard',
+					filePath: this.imgPath,
+					name: 'img',
+					header: {
+						'accessToken': _this.token,
+					},
+					success: function(uploadFileRes) {
+						console.log(uploadFileRes.data);
+					},
+					fail(err) {
+						console.info(err)
+					}
+				});
 				return getRquest(url, params).then(res => {
 					console.info(res)
 					if (res.code == 200) {
@@ -99,6 +155,20 @@
 					console.info(err);
 					uni.hideLoading();
 				})
+			},
+			ChooseImage() {
+				uni.chooseImage({
+					count: 1, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: (res) => {
+						this.imgList = res.tempFilePaths
+						this.imgPath = res.tempFilePaths[0]
+					}
+				});
+			},
+			DelImg(e) {
+				this.imgList.splice(e.currentTarget.dataset.index, 1)
 			},
 		}
 	}

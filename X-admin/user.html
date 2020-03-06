@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>欢迎页面-X-admin2.1</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/xadmin.js"></script>
+		<script type="text/javascript" src="./js/cookie.js"></script>
+		<script type="text/javascript" src="./js/util.js"></script>
+	</head>
+
+	<body>
+		<div class="x-nav">
+			<span class="layui-breadcrumb">
+				<a href="">首页</a>
+				<a href="">用户管理</a>
+				<a>
+					<cite>用户列表</cite></a>
+			</span>
+			<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);"
+			 title="刷新">
+				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
+		</div>
+		<div class="x-body">
+			<div class="layui-row">
+				<div class="layui-form layui-col-md12 x-so">
+					<input type="text" name="loginName" id="loginName" placeholder="账号" autocomplete="off" class="layui-input">
+					<input type="text" name="userName" id="userName" placeholder="姓名" autocomplete="off" class="layui-input">
+					<input type="text" name="specialty" id="specialty" placeholder="专业" autocomplete="off" class="layui-input">
+					<input type="text" name="className" id="className" placeholder="班级" autocomplete="off" class="layui-input">
+					<button class="layui-btn" id="search"><i class="layui-icon">&#xe615;</i></button>
+				</div>
+			</div>
+			<table class="layui-table" lay-filter="task" id="task"></table>
+		</div>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-xs" lay-event="edit">审核通过</a>
+		</script>
+		<script>
+			$("#search").click(function() {
+				layuiF();
+			})
+
+			function layuiF() {
+				layui.use(['form', 'layedit', 'laydate', 'table', 'upload'], function() {
+					var form = layui.form,
+						layer = layui.layer,
+						layedit = layui.layedit,
+						layuiTable = layui.table;
+					var params = {
+						"userType": "1",
+						"className": $("#className").val(),
+						"userName": $("#userName").val(),
+						"loginName": $("#loginName").val(),
+						"specialty": $("#specialty").val(),
+					};
+					var table_name = layuiTable.render({
+						elem: "#task", //html table id
+						url: getUrl() + "user/admin/userList", //数据接口
+						cols: [],
+						toolbar: '#toolbarDemo',
+						method: 'get',
+						headers: {
+							'accessToken': sessionStorage.getItem("token")
+						},
+						toolbar: true,
+						where: params,
+						parseData: function(res) { //res 即为原始返回的数据
+							console.info(res);
+							return {
+								"code": 200, //解析接口状态
+								"msg": res.message, //解析提示文本
+								"total": res.data.total, //解析数据长度
+								"rows": res.data.rows //解析数据列表
+							};
+						},
+						response: {
+							statusName: 'code' //规定数据状态的字段名称，默认：code
+								,
+							statusCode: 200 //规定成功的状态码，默认：0
+								,
+							msgName: 'hint' //规定状态信息的字段名称，默认：msg
+								,
+							countName: 'total' //规定数据总数的字段名称，默认：count
+								,
+							dataName: 'rows' //规定数据列表的字段名称，默认：data
+						},
+						cols: [
+							[{
+								field: 'id',
+								title: 'ID',
+								sort: true
+							}, {
+								field: 'loginName',
+								title: '账号',
+								sort: true
+							}, {
+								field: 'userName',
+								title: '姓名',
+								sort: true
+							}, {
+								field: 'phone',
+								title: '手机号',
+								sort: true
+							}, {
+								field: 'email',
+								title: '邮箱',
+								sort: true
+							}, {
+								field: 'specialty',
+								title: '专业',
+								sort: true
+							}, {
+								field: 'className',
+								title: '班级',
+								sort: true
+							}, {
+								field: 'studentIdCard',
+								title: '学生证照片',
+								sort: true
+							}, {
+								field: 'auth',
+								title: '是否审核',
+								sort: true,
+								templet: function(d) {
+									let authStatus = ['否', '是']
+									let studentList = d.auth;
+									return authStatus[d.auth];
+								},
+							}, {
+								fixed: 'right',
+								title: '操作',
+								toolbar: '#barDemo',
+								width: 150
+							}]
+						],
+						page: {
+							limit: 10, //指定每页显示的条数
+							limits: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50], //每页条数的选择项
+						}
+
+					});
+					//监听行工具事件
+					layuiTable.on('tool(task)', function(obj) {
+						var data = obj.data;
+						if (obj.event === 'edit') {
+							member_del(obj, data.id);
+						}
+					});
+				});
+			}
+			layuiF();
+			/*学校-删除*/
+			function member_del(obj, id) {
+				layer.confirm('是否审核通过？', function(index) {
+					$.ajax({
+						url: getUrl() + "user/admin/userAuth/" + id, //数据接口
+						type: "post",
+						success: function(res) {
+							if (res.code == 200) {
+								layer.msg('审核成功!', {
+									icon: 1,
+									time: 1000
+								});
+							} else {
+								layer.msg(res.message, {
+									icon: 1,
+									time: 1000
+								});
+							}
+						}
+					})
+				});
+			}
+		</script>
+	</body>
+</html>

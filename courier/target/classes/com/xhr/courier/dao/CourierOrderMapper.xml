@@ -130,6 +130,9 @@
 			<if test="price != null and price != ''">
 				price=#{price},
 			</if>
+			<if test="remark != null and remark != ''">
+				remark=#{remark},
+			</if>
 		</trim>
 		WHERE id=#{id}
 	</update>

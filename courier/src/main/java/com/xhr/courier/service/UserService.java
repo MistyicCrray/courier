@@ -63,6 +63,8 @@ public class UserService {
 		if (list.size() != 0) {
 			return null;
 		}
+		user.setAuth("0");
+		user.setUserType("1");
 		userMapper.insert(user);
 		return user;
 	}
@@ -88,9 +90,12 @@ public class UserService {
 		return userMapper.findList(map);
 	}
 
-	public void update(Map<String, Object> userMap, MultipartFile file) {
-		if (file != null) {
-			userMap.put("avatar", (String) FileUtil.uploadImage(file).get("filePath"));
+	public void update(Map<String, Object> userMap, MultipartFile avatar, MultipartFile studentIdCard) {
+		if (avatar != null) {
+			userMap.put("avatar", (String) FileUtil.uploadImage(avatar).get("filePath"));
+		}
+		if (studentIdCard != null) {
+			userMap.put("studentIdCard", (String) FileUtil.uploadImage(studentIdCard).get("filePath"));
 		}
 		userMapper.update(userMap);
 	}

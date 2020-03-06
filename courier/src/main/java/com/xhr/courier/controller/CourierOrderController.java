@@ -121,10 +121,14 @@ public class CourierOrderController {
 	@RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
 	@LoginRequired
 	public Result updateCourierOrder(@PathVariable(value = "id") String id, @CurrentUser User user) {
-
+		
+		if (user.getAuth().equals("0")) {
+			return ResultGenerator.genFailResult("接单失败，你暂未通过审核");
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
-
+		
 		CourierOrder findById = courierOrderService.findById(Integer.parseInt(id));
 		if (findById.getStatus().equals("1") || findById.getStatus().equals("2")) {
 			return ResultGenerator.genFailResult("该订单已被接取");

@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.StringUtil;
 import com.xhr.courier.model.User;
 import com.xhr.courier.service.UserService;
 import com.xhr.courier.tools.MD5;
@@ -23,6 +26,7 @@ import com.xhr.courier.tools.interceptor.CurrentUser;
 import com.xhr.courier.tools.interceptor.LoginRequired;
 import com.xhr.courier.tools.result.Result;
 import com.xhr.courier.tools.result.ResultGenerator;
+import com.xhr.courier.tools.result.TableData;
 
 @RestController
 @RequestMapping("/user")
@@ -89,7 +93,22 @@ public class UserController {
 		System.out.println(img);
 		Map<String, Object> userMap = new HashMap<String, Object>();
 		userMap.put("id", user.getId());
-		userService.update(userMap, img);
+		userService.update(userMap, img, null);
+		return ResultGenerator.genSuccessResult("修改成功");
+	}
+
+	/**
+	 * 更换学生证
+	 * 
+	 * @param img
+	 * @return
+	 */
+	@LoginRequired
+	@RequestMapping(value = "/changeStudentIdCard", method = RequestMethod.POST)
+	public Result changeStudentIdCard(@RequestParam(required = false) MultipartFile img, @CurrentUser User user) {
+		Map<String, Object> userMap = new HashMap<String, Object>();
+		userMap.put("id", user.getId());
+		userService.update(userMap, null, img);
 		return ResultGenerator.genSuccessResult("修改成功");
 	}
 
@@ -108,7 +127,7 @@ public class UserController {
 			Map<String, Object> userMap = new HashMap<String, Object>();
 			userMap.put("password", MD5.md5(map.get("passwordOne")));
 			userMap.put("id", user.getId());
-			userService.update(userMap, null);
+			userService.update(userMap, null, null);
 		}
 		return ResultGenerator.genSuccessResult("修改成功");
 	}
@@ -134,7 +153,7 @@ public class UserController {
 	@RequestMapping(value = "/updateCurUser", method = RequestMethod.GET)
 	public Result update(@RequestParam(required = false) Map<String, Object> map, @CurrentUser User user) {
 		map.put("id", user.getId());
-		userService.update(map, null);
+		userService.update(map, null, null);
 		return ResultGenerator.genSuccessResult("修改成功");
 	}
 
@@ -151,6 +170,7 @@ public class UserController {
 	}
 
 	/**
+	 * 忘记密码
 	 * 
 	 * @param user
 	 * @return
@@ -168,10 +188,56 @@ public class UserController {
 			userMap.put("id", user.getId());
 			// 置空
 			userMap.put("emailCode", "");
-			userService.update(userMap, null);
+			userService.update(userMap, null, null);
 			return ResultGenerator.genSuccessResult("修改成功");
 		} else {
 			return ResultGenerator.genFailResult("验证码不正确");
 		}
 	}
+
+	/**
+	 * 管理员查询
+	 * @param map
+	 * @param user
+	 * @param pageNum
+	 * @param size
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/userList", method = RequestMethod.GET)
+//	@LoginRequired
+	public Result findUserList(@RequestParam(required = false) Map<String, Object> map,
+			Integer page, Integer limit) {
+		/*if (user.getUserType().equals("1")) {
+			return ResultGenerator.genFailResult("权限不足");
+		}*/
+		Page<User> pageBean = PageHelper.startPage(page == null ? 1 : page, limit == null ? 5 : limit);
+		List<User> list = userService.findList(map);
+		return ResultGenerator.genSuccessResult(new TableData<User>(pageBean.getTotal(), list));
+	}
+	
+	/**
+	 * 管理员审核
+	 * 
+	 * @return
+	 * @throws MessagingException
+	 */
+	@RequestMapping(value = "/admin/userAuth/{userId}", method = RequestMethod.POST)
+	@LoginRequired
+	public Result userAuth(@CurrentUser User user, @PathVariable int userId) {
+		if (user.getUserType().equals("1")) {
+			return ResultGenerator.genFailResult("权限不足");
+		}
+		User findById = userService.findById(userId);
+		if (findById.getAuth().equals("1")) {
+			return ResultGenerator.genFailResult("用户已审核通过");
+		}
+		if (StringUtil.isNotEmpty(findById.getStudentIdCard())) {
+			return ResultGenerator.genFailResult("用户暂未上传学生证");
+		}
+		Map<String, Object> userMap = new HashMap<String, Object>();
+		userMap.put("auth", 1);
+		userService.update(userMap, null, null);
+		return ResultGenerator.genSuccessResult("审核成功");
+	}
+
 }
