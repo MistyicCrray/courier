@@ -197,24 +197,25 @@ public class UserController {
 
 	/**
 	 * 管理员查询
+	 * 
 	 * @param map
 	 * @param user
 	 * @param pageNum
 	 * @param size
 	 * @return
 	 */
+	@LoginRequired
 	@RequestMapping(value = "/admin/userList", method = RequestMethod.GET)
-//	@LoginRequired
-	public Result findUserList(@RequestParam(required = false) Map<String, Object> map,
+	public Result findUserList(@RequestParam(required = false) Map<String, Object> map, @CurrentUser User user,
 			Integer page, Integer limit) {
-		/*if (user.getUserType().equals("1")) {
+		if (user.getUserType().equals("1")) {
 			return ResultGenerator.genFailResult("权限不足");
-		}*/
+		}
 		Page<User> pageBean = PageHelper.startPage(page == null ? 1 : page, limit == null ? 5 : limit);
 		List<User> list = userService.findList(map);
 		return ResultGenerator.genSuccessResult(new TableData<User>(pageBean.getTotal(), list));
 	}
-	
+
 	/**
 	 * 管理员审核
 	 * 
