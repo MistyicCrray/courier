@@ -146,11 +146,16 @@
 		order_id,
 		remark,
 		price,
+		cabinet_time,
 		a.create_time,
 		`status`,
 		b.avatar,
 		b.user_name,
-		order_user_id, is_big, a.phone, address, pay_status
+		order_user_id, 
+		is_big, 
+		a.phone, 
+		address, 
+		pay_status
 		from t_courier_order as a 
 		left join t_user as b on a.user_id=b.id
 		<where>
@@ -165,6 +170,12 @@
 			</if>
 			<if test="isBig != null and isBig != ''">
 				and is_big=#{isBig}
+			</if>
+			<if test="sendUser != null and sendUser != ''">
+				and b.user_name=#{sendUser}
+			</if>
+			<if test="status != null and status != ''">
+				and a.status=#{status}
 			</if>
 		</where>
 		order by a.create_time desc

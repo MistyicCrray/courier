@@ -1,19 +1,10 @@
-axios.defaults.baseURL = '/EggShellBackGroud';
-if (localStorage.length > 0 && sessionStorage.length <= 0) {
-
-	sessionStorage.setItem("userId", resultdata.data.userInfo.id);
-	sessionStorage.setItem("username", resultdata.data.userInfo.username);
-	sessionStorage.setItem("accessToken", resultdata.data.accessToken);
-}
-
+axios.defaults.baseURL = '/main';
 // http request 拦截器
 axios.interceptors.request.use(
-	config => {
 
-		if (sessionStorage.accessToken) { // 判断是否存在token，如果存在的话，则每个http header都加上token
-			//			config.headers.Authorization = `token ${localStorage.JWT_TOKEN}`;
-			//			config.headers.accessToken = `token ${localStorage.accessToken}`;
-			config.headers.accessToken = sessionStorage.accessToken;
+	config => {
+		if (sessionStorage.getItem("token")) {
+			config.headers.accessToken = sessionStorage.getItem("token");
 
 		}
 		return config;

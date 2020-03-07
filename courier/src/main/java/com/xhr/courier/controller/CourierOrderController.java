@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -121,14 +122,14 @@ public class CourierOrderController {
 	@RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
 	@LoginRequired
 	public Result updateCourierOrder(@PathVariable(value = "id") String id, @CurrentUser User user) {
-		
+
 		if (user.getAuth().equals("0")) {
 			return ResultGenerator.genFailResult("接单失败，你暂未通过审核");
 		}
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
-		
+
 		CourierOrder findById = courierOrderService.findById(Integer.parseInt(id));
 		if (findById.getStatus().equals("1") || findById.getStatus().equals("2")) {
 			return ResultGenerator.genFailResult("该订单已被接取");
@@ -263,5 +264,48 @@ public class CourierOrderController {
 		} else {
 			System.out.println("异步通知失败");
 		}
+	}
+
+	/**
+	 * 条件查询
+	 * 
+	 * @param map
+	 * @param pageNum
+	 * @param size
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/findList", method = RequestMethod.GET)
+	@LoginRequired
+	public Result adminFindList(@RequestParam(required = false) Map<String, Object> map, Integer limit, Integer page) {
+		Page<Map<String, Object>> pageBean = PageHelper.startPage(page == null ? 1 : page, limit == null ? 5 : limit);
+		List<Map<String, Object>> list = courierOrderService.findList(map);
+		return ResultGenerator.genSuccessResult(new TableData<Map<String, Object>>(pageBean.getTotal(), list));
+	}
+
+	/**
+	 * 统计
+	 * 
+	 * @return
+	 */
+	@LoginRequired
+	@RequestMapping(value = "/admin/statics")
+	public Result statics() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Map<String, Object>> findList = courierOrderService.findList(map);
+		Map<String, Object> resMap = new HashMap<String, Object>();
+		// 订单总数
+		resMap.put("orderTotal", findList.size());
+		map.put("status", "2");
+		List<Map<String, Object>> findList2 = courierOrderService.findList(map);
+		// 订单完成数
+		resMap.put("orderSuccessTotal", findList2.size());
+		double total = 0;
+		for (Map<String, Object> map2 : findList2) {
+			double parseDouble = Double.parseDouble(map2.get("price").toString());
+			total += parseDouble;
+		}
+		// 交易额
+		resMap.put("total", total);
+		return ResultGenerator.genSuccessResult(resMap);
 	}
 }

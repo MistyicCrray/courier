@@ -72,21 +72,21 @@
 												<a href="javascript:;" class="x-admin-backlog-body">
 													<h3>订单数量</h3>
 													<p>
-														<cite>{{1}}</cite></p>
+														<cite>{{statics.orderTotal}}</cite></p>
 												</a>
 											</li>
 											<li class="layui-col-xs2">
 												<a href="javascript:;" class="x-admin-backlog-body">
 													<h3>订单完成数量</h3>
 													<p>
-														<cite>{{1}}</cite></p>
+														<cite>{{statics.orderSuccessTotal}}</cite></p>
 												</a>
 											</li>
 											<li class="layui-col-xs2">
 												<a href="javascript:;" class="x-admin-backlog-body">
 													<h3>交易总额</h3>
 													<p>
-														<cite>{{1}}</cite></p>
+														<cite>{{statics.total}}</cite></p>
 												</a>
 											</li>
 										</ul>
@@ -116,10 +116,17 @@
 				el: '#app',
 				data: {
 					user: sessionStorage,
-					nowTime: new Date()
+					nowTime: new Date(),
+					statics: ""
 				},
 				methods: {
-
+					getStatics() {
+						let _this = this;
+						axios.get("/courierOrder/admin/statics").then(function(res) {
+							console.info(res);
+							_this.statics = res.data.data;
+						})
+					}
 				},
 				mounted: function() {
 					let _this = this; // 声明一个变量指向Vue实例this，保证作用域一致
@@ -138,7 +145,7 @@
 					}, 1000);
 				},
 				created: function() {
-
+					this.getStatics();
 				},
 				filters: {
 

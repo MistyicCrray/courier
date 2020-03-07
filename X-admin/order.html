@@ -14,15 +14,16 @@
 		<script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./js/xadmin.js"></script>
 		<script type="text/javascript" src="./js/cookie.js"></script>
+		<script src="js/moment.min.js"></script>
 	</head>
 
 	<body>
 		<div class="x-nav">
 			<span class="layui-breadcrumb">
 				<a href="">首页</a>
-				<a href="">用户管理</a>
+				<a href="">代领订单管理</a>
 				<a>
-					<cite>用户列表</cite></a>
+					<cite>代领订单列表</cite></a>
 			</span>
 			<a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);"
 			 title="刷新">
@@ -31,18 +32,15 @@
 		<div class="x-body">
 			<div class="layui-row">
 				<div class="layui-form layui-col-md12 x-so">
-					<input type="text" name="loginName" id="loginName" placeholder="账号" autocomplete="off" class="layui-input">
 					<input type="text" name="userName" id="userName" placeholder="姓名" autocomplete="off" class="layui-input">
-					<input type="text" name="specialty" id="specialty" placeholder="专业" autocomplete="off" class="layui-input">
-					<input type="text" name="className" id="className" placeholder="班级" autocomplete="off" class="layui-input">
 					<button class="layui-btn" id="search"><i class="layui-icon">&#xe615;</i></button>
 				</div>
 			</div>
 			<table class="layui-table" lay-filter="task" id="task"></table>
 		</div>
-		<script type="text/html" id="barDemo">
+		<!-- <script type="text/html" id="barDemo">
 			<a class="layui-btn layui-btn-xs" lay-event="edit">审核通过</a>
-		</script>
+		</script> -->
 		<script>
 			$("#search").click(function() {
 				layuiF();
@@ -76,15 +74,11 @@
 						layedit = layui.layedit,
 						layuiTable = layui.table;
 					var params = {
-						"userType": "1",
-						"className": $("#className").val(),
-						"userName": $("#userName").val(),
-						"loginName": $("#loginName").val(),
-						"specialty": $("#specialty").val(),
+						"sendUser": $("#userName").val()
 					};
 					var table_name = layuiTable.render({
 						elem: "#task", //html table id
-						url: getUrl() + "user/admin/userList", //数据接口
+						url: getUrl() + "courierOrder/admin/findList", //数据接口
 						cols: [],
 						toolbar: '#toolbarDemo',
 						method: 'get',
@@ -115,46 +109,61 @@
 								title: 'ID',
 								sort: true
 							}, {
-								field: 'loginName',
-								title: '账号',
+								field: 'courier',
+								title: '物流名称',
 								sort: true
 							}, {
-								field: 'userName',
-								title: '姓名',
+								field: 'user_name',
+								title: '发布人',
 								sort: true
 							}, {
-								field: 'phone',
-								title: '手机号',
-								sort: true
-							}, {
-								field: 'email',
-								title: '邮箱',
-								sort: true
-							}, {
-								field: 'specialty',
-								title: '专业',
-								sort: true
-							}, {
-								field: 'className',
-								title: '班级',
-								sort: true
-							}, {
-								field: 'studentIdCard',
-								title: '学生证照片',
+								field: 'create_time',
+								title: '创建时间',
 								sort: true,
 								templet: function(d) {
-									return d.studentIdCard == null ? "暂无图片" : "<img onclick='bigImg(`" + d.studentIdCard +
-										"`)' src='http://localhost/static/" + d.studentIdCard +
-										"' />";
+									return moment(d.create_time).format("YYYY-MM-DD HH:mm:ss");
 								},
 							}, {
-								field: 'auth',
-								title: '是否审核',
+								field: 'cabinet_time',
+								title: '入柜时间',
 								sort: true,
 								templet: function(d) {
-									let authStatus = ['否', '是']
-									let studentList = d.auth;
-									return authStatus[d.auth];
+									return moment(d.cabinet_time).format("YYYY-MM-DD HH:mm:ss");
+								},
+							}, {
+								field: 'status',
+								title: '状态',
+								sort: true,
+								templet: function(d) {
+									let status = ['待领取', "已领取", "已完成"]
+									return status[d.status];
+								},
+							}, {
+								field: 'is_big',
+								title: '是否大件',
+								sort: true,
+								templet: function(d) {
+									let is_big = ['否', "是"]
+									return is_big[d.is_big];
+								},
+							}, {
+								field: 'address',
+								title: '地址',
+								sort: true,
+							}, {
+								field: 'pay_status',
+								title: '付款状态',
+								sort: true,
+								templet: function(d) {
+									let authStatus = ['未支付', '已支付']
+									return authStatus[d.pay_status];
+								},
+							}, {
+								field: 'price',
+								title: '价格',
+								sort: true,
+								templet: function(d) {
+									return "￥" + d.price;
 								},
 							}, {
 								fixed: 'right',

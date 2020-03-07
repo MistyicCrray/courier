@@ -41,7 +41,7 @@ public class ContractController {
 		List<Map<String, Object>> list = contractService.findByUserId(currentUser.getId());
 		return ResultGenerator.genSuccessResult(new TableData<Map<String, Object>>(page.getTotal(), list));
 	}
-	
+
 	@RequestMapping(value = "/findContractInfo", method = RequestMethod.GET)
 	@LoginRequired
 	public Result findContractInfo(@CurrentUser User currentUser, Integer pageNum, Integer size, int toUserId) {
