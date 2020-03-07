@@ -232,11 +232,12 @@ public class UserController {
 		if (findById.getAuth().equals("1")) {
 			return ResultGenerator.genFailResult("用户已审核通过");
 		}
-		if (StringUtil.isNotEmpty(findById.getStudentIdCard())) {
+		if (StringUtil.isEmpty(findById.getStudentIdCard())) {
 			return ResultGenerator.genFailResult("用户暂未上传学生证");
 		}
 		Map<String, Object> userMap = new HashMap<String, Object>();
 		userMap.put("auth", 1);
+		userMap.put("id", userId);
 		userService.update(userMap, null, null);
 		return ResultGenerator.genSuccessResult("审核成功");
 	}

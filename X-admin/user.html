@@ -185,15 +185,19 @@
 					$.ajax({
 						url: getUrl() + "user/admin/userAuth/" + id, //数据接口
 						type: "post",
+						headers: {
+							'accessToken': sessionStorage.getItem("token")
+						},
 						success: function(res) {
 							if (res.code == 200) {
 								layer.msg('审核成功!', {
 									icon: 1,
 									time: 1000
 								});
+								layuiF();
 							} else {
 								layer.msg(res.message, {
-									icon: 1,
+									icon: 2,
 									time: 1000
 								});
 							}
