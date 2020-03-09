@@ -159,7 +159,7 @@
 					mask: true,
 					title: '加载中',
 				});
-				let url = "courierOrder/findList";
+				let url = "courierOrder/findListIndex";
 				let params = {
 					"pageNum": this.page,
 					"size": this.counts

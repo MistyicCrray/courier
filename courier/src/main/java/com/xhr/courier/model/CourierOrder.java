@@ -106,6 +106,15 @@ public class CourierOrder {
 	private String address;
 	private String payStatus;
 	private String price;
+	private Date acceptTime;
+
+	public Date getAcceptTime() {
+		return acceptTime;
+	}
+
+	public void setAcceptTime(Date acceptTime) {
+		this.acceptTime = acceptTime;
+	}
 
 	public String getPayStatus() {
 		return payStatus;

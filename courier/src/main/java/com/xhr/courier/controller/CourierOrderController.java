@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -137,6 +138,7 @@ public class CourierOrderController {
 
 		map.put("orderUserId", user.getId());
 		map.put("status", 1);
+		map.put("acceptTime", new Date());
 		return ResultGenerator.genSuccessResult(courierOrderService.updateCorier(map));
 	}
 
@@ -152,6 +154,23 @@ public class CourierOrderController {
 	public Result findList(@RequestParam(required = false) Map<String, Object> map, Integer pageNum, Integer size) {
 		Page<Map<String, Object>> page = PageHelper.startPage(pageNum == null ? 1 : pageNum, size == null ? 5 : size);
 		List<Map<String, Object>> list = courierOrderService.findList(map);
+		return ResultGenerator.genSuccessResult(new TableData<Map<String, Object>>(page.getTotal(), list));
+	}
+
+	/**
+	 * 条件查询(首页)
+	 * 
+	 * @param map
+	 * @param pageNum
+	 * @param size
+	 * @return
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = "/findListIndex", method = RequestMethod.GET)
+	public Result findListIndex(@RequestParam(required = false) Map<String, Object> map, Integer pageNum, Integer size)
+			throws ParseException {
+		Page<Map<String, Object>> page = PageHelper.startPage(pageNum == null ? 1 : pageNum, size == null ? 5 : size);
+		List<Map<String, Object>> list = courierOrderService.findListIndex(map);
 		return ResultGenerator.genSuccessResult(new TableData<Map<String, Object>>(page.getTotal(), list));
 	}
 

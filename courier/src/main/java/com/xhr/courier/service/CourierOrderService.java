@@ -1,5 +1,7 @@
 package com.xhr.courier.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +43,11 @@ public class CourierOrderService {
 
 	public List<Map<String, Object>> findList(Map<String, Object> map) {
 		return courierOrderMapper.findList(map);
+	}
+	
+	public List<Map<String, Object>> findListIndex(Map<String, Object> map) throws ParseException {
+		List<Map<String,Object>> list = courierOrderMapper.findListIndex(map);
+		return list;
 	}
 
 	public CourierOrder findById(int id) {

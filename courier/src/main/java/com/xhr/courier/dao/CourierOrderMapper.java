@@ -51,4 +51,6 @@ public interface CourierOrderMapper {
     int update(Map<String, Object> map);
     
     List<Map<String, Object>> findList(Map<String, Object> map);
+
+	List<Map<String, Object>> findListIndex(Map<String, Object> map);
 }

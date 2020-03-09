@@ -80,7 +80,7 @@
 			MyBatis Generator, do not modify. This element was generated on Sun Jan 26 
 			18:17:36 CST 2020. -->
 		select id, user_id, address_id, pickup_code, courier, order_id,
-		remark, create_time,price,
+		remark, create_time,price,accept_time,
 		cabinet_time, status, order_user_id, is_big, phone, address, pay_status
 		from
 		t_courier_order
@@ -91,7 +91,7 @@
 			MyBatis Generator, do not modify. This element was generated on Sun Jan 26 
 			18:17:36 CST 2020. -->
 		select id, user_id, address_id, pickup_code, courier, order_id,
-		remark, create_time,price,
+		remark, create_time,price,accept_time,
 		cabinet_time, status, order_user_id, is_big, phone, address, pay_status
 		from
 		t_courier_order
@@ -133,6 +133,9 @@
 			<if test="remark != null and remark != ''">
 				remark=#{remark},
 			</if>
+			<if test="acceptTime != null and acceptTime != ''">
+				accept_time=#{acceptTime},
+			</if>
 		</trim>
 		WHERE id=#{id}
 	</update>
@@ -155,6 +158,7 @@
 		is_big, 
 		a.phone, 
 		address, 
+		accept_time, 
 		pay_status
 		from t_courier_order as a 
 		left join t_user as b on a.user_id=b.id
@@ -177,6 +181,52 @@
 			<if test="status != null and status != ''">
 				and a.status=#{status}
 			</if>
+		</where>
+		order by a.create_time desc
+	</select>
+
+	<select id="findListIndex" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT a.id,
+		a.user_id,
+		address_id,
+		pickup_code,
+		courier,
+		order_id,
+		remark,
+		price,
+		cabinet_time,
+		a.create_time,
+		`status`,
+		b.avatar,
+		b.user_name,
+		order_user_id, 
+		is_big, 
+		a.phone, 
+		address, 
+		accept_time, 
+		pay_status
+		from t_courier_order as a 
+		left join t_user as b on a.user_id=b.id
+		<where>
+			<if test="userId != null and userId != ''">
+				and a.user_id=#{userId}
+			</if>
+			<if test="orderUserId != null and orderUserId != ''">
+				and order_user_id=#{orderUserId}
+			</if>
+			<if test="payStatus != null and payStatus != ''">
+				and pay_status=#{payStatus}
+			</if>
+			<if test="isBig != null and isBig != ''">
+				and is_big=#{isBig}
+			</if>
+			<if test="sendUser != null and sendUser != ''">
+				and b.user_name=#{sendUser}
+			</if>
+			<if test="status != null and status != ''">
+				and a.status=#{status}
+			</if>
+			and datediff(now(),accept_time) &lt; 1
 		</where>
 		order by a.create_time desc
 	</select>

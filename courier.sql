@@ -11,7 +11,7 @@
  Target Server Version : 50545
  File Encoding         : 65001
 
- Date: 06/03/2020 21:35:33
+ Date: 09/03/2020 20:38:06
 */
 
 SET NAMES utf8mb4;
@@ -64,6 +64,7 @@ CREATE TABLE `t_courier_order`  (
   `address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址',
   `pay_status` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '支付状态0-未支付  1-已支付',
   `price` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '价格',
+  `accept_time` datetime NULL DEFAULT NULL COMMENT '接单时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
