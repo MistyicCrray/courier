@@ -11,7 +11,7 @@
 				<cmd-transition name="fade-up">
 					<view v-if="!status">
 						<view class="login-username">
-							<cmd-input v-model="account.loginName" type="text" focus maxlength="26" placeholder="请输入账号"></cmd-input>
+							<cmd-input v-model="account.loginName" type="text" focus maxlength="6" placeholder="请输入账号"></cmd-input>
 						</view>
 						<view class="login-password">
 							<cmd-input v-model="account.password" type="password" displayable maxlength="26" placeholder="请输入密码"></cmd-input>
@@ -114,9 +114,11 @@
 							key: "accessToken",
 							data: res.data.accessToken
 						})
-						uni.navigateTo({
-							url: '/pages/index/index'
-						})
+						setTimeout(() => {
+							uni.navigateTo({
+								url: '/pages/index/index'
+							})
+						}, 1000)
 					} else {
 						uni.showToast({
 							title: res.message,

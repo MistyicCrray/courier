@@ -226,7 +226,7 @@
 			<if test="status != null and status != ''">
 				and a.status=#{status}
 			</if>
-			and datediff(now(),accept_time) &lt; 1
+			and (datediff(now(),accept_time) &lt; 1 or accept_time is null)
 		</where>
 		order by a.create_time desc
 	</select>

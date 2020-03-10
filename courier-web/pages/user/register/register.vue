@@ -9,13 +9,13 @@
 				<cmd-transition name="fade-up">
 					<view v-if="!status">
 						<view class="register-username">
-							<cmd-input v-model="account.loginName" type="text" focus maxlength="26" placeholder="请输入账号"></cmd-input>
+							<cmd-input v-model="account.loginName" type="text" focus maxlength="6" placeholder="请输入账号"></cmd-input>
 						</view>
 						<view class="register-password">
 							<cmd-input v-model="account.password" type="password" displayable maxlength="26" placeholder="请输入密码"></cmd-input>
 						</view>
 						<view class="register-username">
-							<cmd-input v-model="account.email" type="text" displayable maxlength="26" placeholder="请输入邮箱"></cmd-input>
+							<cmd-input v-model="account.email" type="text" placeholder="请输入邮箱"></cmd-input>
 						</view>
 						<button class="btn-register" @tap="fnRegister">注册</button>
 					</view>
@@ -58,11 +58,13 @@
 				},
 				phoneReg: /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/,
 				registerMobile: false,
+				emailReg: /^\w+@[a-z0-9]+\.[a-z]{2,4}$/,
 				safety: {
 					time: 60,
 					state: false,
 					interval: ''
 				},
+
 				status: false // true手机注册,false账号注册
 			};
 		},
@@ -92,6 +94,13 @@
 					})
 					return;
 				}
+				if (!this.emailReg.test(_this.account.email)) {
+					uni.showToast({
+						title: '请输入正确的邮箱',
+						icon: 'none'
+					})
+					return;
+				}
 				return getRquest(url, params).then(res => {
 					console.info(res);
 					if (res.code == 200) {
@@ -99,9 +108,11 @@
 							title: '注册成功',
 							icon: 'none'
 						})
-						uni.navigateTo({
-							url: '/pages/user/login/login'
-						})
+						setTimeout(() => {
+							uni.navigateTo({
+								url: '/pages/user/login/login'
+							})
+						}, 1000)
 					} else {
 						uni.showToast({
 							title: res.message,

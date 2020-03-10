@@ -1,5 +1,6 @@
 <template name="courierIndex">
-	<you-scroll class="page" ref="scroll" :scroll-top="scrollTop" @onPullDown="onPullDown" @onScroll="onScroll" @onLoadMore="onLoadMore">
+	<you-scroll class="page" ref="scroll" :scroll-top="scrollTop" @onPullDown="onPullDown" @onScroll="onScroll"
+	 @onLoadMore="onLoadMore">
 		<swiper class="screen-swiper" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true" :circular="true"
 		 :autoplay="true" interval="5000" duration="500">
 			<swiper-item v-for="(item,index) in swiperList" :key="index">
@@ -50,7 +51,7 @@
 			</view>
 		</view>
 	</you-scroll>
-			
+
 </template>
 
 <script>
@@ -110,7 +111,7 @@
 				page: 1,
 				counts: 6,
 				imgUrl: imgUrl,
-				isBig: "",
+				isBig: 0,
 				display: false,
 				flag: false,
 				scrollTop: 0
@@ -126,7 +127,7 @@
 			onPullDown(done) {
 				let _this = this;
 				_this.page = 1;
-				_this.isBig = ""
+				_this.isBig = 0
 				setTimeout(() => {
 					_this.courier = [];
 					this.isEndPage = false;
@@ -140,7 +141,7 @@
 				setTimeout(() => {
 					_this.loadData();
 				}, 1000 * 1)
-				
+
 			},
 			IsCard(e) {
 				this.isCard = e.detail.value
@@ -164,12 +165,10 @@
 					"pageNum": this.page,
 					"size": this.counts
 				}
-				if (_this.isBig != "") {
-					params.isBig = _this.isBig;
-				}
+				params.isBig = _this.isBig;
 				return getRquest(url, params).then(res => {
 					console.info(res)
-					this.courier =this.courier.concat(res.data.rows)
+					this.courier = this.courier.concat(res.data.rows)
 					if (res.data.total == this.courier.length) {
 						this.isEndPage = true;
 						uni.hideLoading();
@@ -199,8 +198,7 @@
 				_this.courier = []
 				_this.loadData();
 			},
-			onScroll(e) {
-			}
+			onScroll(e) {}
 		},
 		filters: {
 			dateFilter(value) {
@@ -221,6 +219,7 @@
 	.my-bottom {
 		margin-bottom: 140upx;
 	}
+
 	.topBtn {
 		height: 50px;
 		width: 50px;

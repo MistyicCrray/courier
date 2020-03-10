@@ -76,7 +76,9 @@
 					"isBig": '',
 					"address": '',
 					'phone': ''
-				}
+				},
+				phoneReg: /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/,
+				courierNameReg: /^[\u4e00-\u9fa5a-zA-Z]+$/,
 			};
 		},
 		methods: {
@@ -126,6 +128,20 @@
 					uni.showToast({
 						title: '请输入备注',
 						icon: 'none'
+					})
+					return;
+				}
+				if (!this.phoneReg.test(_this.courier.phone)) {
+					uni.showToast({
+						title: '请输入正确的手机号',
+						icon: 'none'
+					})
+					return;
+				}
+				if (!this.courierNameReg.test(_this.courier.courier)) {
+					uni.showToast({
+						title: "快递名称只能有字母和汉字组成",
+						icon: "none"
 					})
 					return;
 				}
