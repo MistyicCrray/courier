@@ -133,7 +133,7 @@
 			<if test="remark != null and remark != ''">
 				remark=#{remark},
 			</if>
-			<if test="acceptTime != null and acceptTime != ''">
+			<if test="acceptTime != null">
 				accept_time=#{acceptTime},
 			</if>
 		</trim>
