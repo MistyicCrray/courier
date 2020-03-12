@@ -176,7 +176,7 @@
 				and is_big=#{isBig}
 			</if>
 			<if test="sendUser != null and sendUser != ''">
-				and b.user_name=#{sendUser}
+				and b.user_name like '%${sendUser}%'
 			</if>
 			<if test="status != null and status != ''">
 				and a.status=#{status}
