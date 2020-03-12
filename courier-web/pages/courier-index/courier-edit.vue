@@ -48,8 +48,8 @@
 					</view>
 					联系
 				</button>
-				<view class="bg-blue submit" @click="check()">支付</view>
-				<view class="bg-red submit" @click="submit()">修改</view>
+				<view class="bg-blue submit" @click="check()" v-if="courier.pay_status == 0">支付</view>
+				<view class="bg-red submit" @click="submit()" v-if="courier.status == 0">修改</view>
 			</view>
 		</cmd-page-body>
 	</view>
@@ -63,6 +63,9 @@
 	import {
 		getRquest
 	} from "@/api.js"
+	import {
+		baseUrl
+	} from "@/config.js"
 	export default {
 		components: {
 			cmdNavBar,
@@ -157,7 +160,7 @@
 			},
 			check() {
 				let _this = this;
-				let url = "http://localhost:8080/courierOrder/alipayH5Pay/" + _this.courier.id
+				let url = baseUrl + "courierOrder/alipayH5Pay/" + _this.courier.id
 				uni.navigateTo({
 					url: "../web-view/web-view?path=" + url
 				})

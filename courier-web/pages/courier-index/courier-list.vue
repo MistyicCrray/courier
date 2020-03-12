@@ -9,7 +9,7 @@
 				</view>
 			</scroll-view>
 			<view class="cu-card dynamic" :class="isCard?'no-card':''">
-				<view class="cu-item shadow" v-for="item in courier" @click="detail(item.id)">
+				<view class="cu-item shadow" v-for="(item, index) in courier" @click="detail(item.id)" @longpress="del(item.id, item.status, index)">
 					<view class="cu-list menu-avatar">
 						<view class="cu-item">
 							<view class="cu-avatar round lg">
@@ -172,6 +172,10 @@
 					uni.navigateTo({
 						url: '/pages/courier-index/courier-edit?id=' + id
 					})
+				} else {
+					uni.navigateTo({
+						url: '/pages/courier-index/courier-detail?id=' + id
+					})
 				}
 			},
 			tabSelect(e) {
@@ -183,6 +187,31 @@
 				_this.courier = [];
 				this.loadMore = false;
 				_this.loadData(_this.typeS, e.target.dataset.id);
+			},
+			del(id, status, index) {
+				console.info(id)
+				let _this = this;
+				if (status == 0) {
+					uni.showModal({
+						title: '提示',
+						content: '是否要删除改订单?',
+						success: function(res) {
+							if (res.confirm) {
+								let url = "courierOrder/delete/" + id;
+								let params = {}
+								return getRquest(url, params).then(res => {
+									_this.courier.splice(index, 1);
+									uni.showToast({
+										title: "删除成功",
+										icon: "none"
+									})
+								}).catch(err => {
+									console.info(err);
+								})
+							}
+						}
+					});
+				}
 			}
 		},
 		filters: {
