@@ -15,7 +15,7 @@
 							<cmd-input v-model="account.password" type="password" displayable maxlength="26" placeholder="请输入密码"></cmd-input>
 						</view>
 						<view class="register-username">
-							<cmd-input v-model="account.email" type="text" placeholder="请输入邮箱"></cmd-input>
+							<cmd-input v-model="account.email" type="text" focus maxlength="26" placeholder="请输入邮箱"></cmd-input>
 						</view>
 						<button class="btn-register" @tap="fnRegister">注册</button>
 					</view>

@@ -48,7 +48,7 @@
 					</view>
 					联系
 				</button>
-				<view class="bg-blue submit" @click="check()" v-if="courier.pay_status == 0">支付</view>
+				<view class="bg-blue submit" @click="check()" v-if="courier.payStatus == 0">支付</view>
 				<view class="bg-red submit" @click="submit()" v-if="courier.status == 0">修改</view>
 			</view>
 		</cmd-page-body>
