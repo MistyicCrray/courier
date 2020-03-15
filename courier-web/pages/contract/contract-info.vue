@@ -78,7 +78,8 @@
 			let params = {
 				"pageNum": 1,
 				"size": 10000,
-				"toUserId": option.toUserId
+				"toUserId": option.contractId,
+				"contractId": option.contractId
 			}
 			getRquest(url2, params).then(res => {
 				console.info(res)
