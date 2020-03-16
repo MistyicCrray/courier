@@ -76,7 +76,7 @@ SELECT
 	t_contract a
 	LEFT JOIN t_user c ON a.to_user_id = c.id 
 	WHERE	
-	a.user_id = #{userId}
+	a.user_id=#{userId} or a.to_user_id=#{userId}
   </select>
   <select id="findByUserIdAndToUserId" resultMap="BaseResultMap" parameterType="com.xhr.courier.model.Contract">
     select * from t_contract where user_id=#{sendUserId} and to_user_id=#{toUserId}

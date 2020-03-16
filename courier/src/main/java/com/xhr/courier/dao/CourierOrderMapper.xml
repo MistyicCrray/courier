@@ -166,7 +166,7 @@
 			<if test="userId != null and userId != ''">
 				and a.user_id=#{userId}
 			</if>
-			<if test="orderUserId != null and orderUserId != ''">
+			<if test="orderUserId != 0">
 				and order_user_id=#{orderUserId}
 			</if>
 			<if test="payStatus != null and payStatus != ''">

@@ -106,7 +106,7 @@
 		to_user_id
 		FROM
 		t_contract_content
-		WHERE contract_id=#{toUserId}
+		WHERE send_user_id=#{userId} or send_user_id=#{to_user_id} or to_user_id=#{userId} or to_user_id=#{to_user_id}
 		order by create_time
   </select>
   

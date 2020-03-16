@@ -1,7 +1,6 @@
 package com.xhr.courier.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,20 +32,29 @@ public class CourierOrderService {
 	public int updateCorier(Map<String, Object> map) {
 		if (map.get("isBig") != null) {
 			if (map.get("isBig").toString().equals("0")) {
-				 map.put("price", "0.8");
+				map.put("price", "0.8");
 			} else {
 				map.put("price", "1");
 			}
+		}
+		if (map.get("orderUserId").equals("null")) {
+			map.put("orderUserId", 0);
+		}
+		if (map.get("acceptTime").equals("null")) {
+			map.remove("acceptTime");
 		}
 		return courierOrderMapper.update(map);
 	}
 
 	public List<Map<String, Object>> findList(Map<String, Object> map) {
+		if (map.get("orderUserId") == null) {
+			map.put("orderUserId", 0);
+		}
 		return courierOrderMapper.findList(map);
 	}
-	
+
 	public List<Map<String, Object>> findListIndex(Map<String, Object> map) throws ParseException {
-		List<Map<String,Object>> list = courierOrderMapper.findListIndex(map);
+		List<Map<String, Object>> list = courierOrderMapper.findListIndex(map);
 		return list;
 	}
 

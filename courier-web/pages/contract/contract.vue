@@ -4,7 +4,7 @@
 		<cmd-page-body type="top">
 			<view class="cu-list menu-avatar">
 				<view class="cu-item" :class="modalName=='move-box-'+ index?'move-cur':''" v-for="(item,index) in contractorList"
-				 :key="index" @tap="toContract(item.to_user_id == userInfo.id ? item.user_id : item.to_user_id, item.id)" :data-target="'move-box-' + index">
+				 :key="index" v-if="item.to_user_id != userInfo.id" @tap="toContract(item.to_user_id == userInfo.id ? item.user_id : item.to_user_id, item.id)" :data-target="'move-box-' + index">
 					<view class="cu-avatar round lg">
 						<image class="cu-avatar" :src="item.avatar == '' ? 'https://avatar.bbs.miui.com/images/noavatar_small.gif' : imgUrl + item.avatar"
 						 mode=""></image>

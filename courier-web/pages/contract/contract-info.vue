@@ -51,6 +51,9 @@
 	import {
 		imgUrl
 	} from '@/config'
+	import {
+		webSocketUrl
+	} from '@/config'
 	export default {
 		components: {
 			cmdNavBar,
@@ -78,8 +81,8 @@
 			let params = {
 				"pageNum": 1,
 				"size": 10000,
-				"toUserId": option.contractId,
-				"contractId": option.contractId
+				"toUserId": option.toUserId,
+				"userId": _this.userInfo.id
 			}
 			getRquest(url2, params).then(res => {
 				console.info(res)
@@ -124,7 +127,7 @@
 				// 创建一个this.socketTask对象【发送、接收、关闭socket都由这个对象操作】
 				this.socketTask = uni.connectSocket({
 					// 【非常重要】必须确保你的服务器是成功的,如果是手机测试千万别使用ws://127.0.0.1:9099【特别容易犯的错误】
-					url: "ws://localhost:8080/websocket/" + _this.userInfo.id,
+					url: webSocketUrl + _this.userInfo.id,
 					success(data) {
 						console.log("websocket连接成功");
 					},
