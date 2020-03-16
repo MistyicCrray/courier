@@ -30,7 +30,7 @@
 			<view class="cu-form-group">
 				<view class="grid col-4 grid-square flex-sub">
 					<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
-						<image :src="userInfo.studentIdCard == '' ? imgList[index] : imgUrl + userInfo.studentIdCard" mode="aspectFill"></image>
+						<image :src="imgList[index]" mode="aspectFill"></image>
 						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 							<text class='cuIcon-close'></text>
 						</view>
@@ -108,7 +108,8 @@
 				let url = "user/curUser";
 				return getRquest(url, '').then(res => {
 					console.info(res)
-					_this.user = res.data
+					_this.user = res.data;
+					_this.imgList[0] = _this.imgUrl + res.data.studentIdCard;
 					uni.hideLoading();
 				}).catch(err => {
 					console.info(err);
@@ -180,6 +181,7 @@
 					success: (res) => {
 						this.imgList = res.tempFilePaths
 						this.imgPath = res.tempFilePaths[0]
+						console.info(this.imgList)
 					}
 				});
 			},
