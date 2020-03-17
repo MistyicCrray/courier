@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.xhr.courier.dao.CourierOrderMapper;
 import com.xhr.courier.model.CourierOrder;
+import com.xhr.courier.tools.UUIDUtils;
 
 @Service
 public class CourierOrderService {
@@ -21,6 +22,7 @@ public class CourierOrderService {
 		courierOrder.setCreateTime(new Date());
 		courierOrder.setStatus("0");
 		courierOrder.setPayStatus("0");
+		courierOrder.setOrderId(UUIDUtils.getOrderIdByTime());
 		if (courierOrder.getIsBig().equals("0")) {
 			courierOrder.setPrice("0.8");
 		} else {
@@ -40,7 +42,7 @@ public class CourierOrderService {
 		if (map.get("orderUserId").equals("null")) {
 			map.put("orderUserId", 0);
 		}
-		if (map.get("acceptTime").equals("null")) {
+		if (map.get("acceptTime") != null && map.get("acceptTime").equals("null")) {
 			map.remove("acceptTime");
 		}
 		return courierOrderMapper.update(map);

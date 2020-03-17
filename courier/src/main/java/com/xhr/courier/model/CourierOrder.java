@@ -55,7 +55,7 @@ public class CourierOrder {
 	 *
 	 * @mbg.generated Sun Jan 26 18:17:36 CST 2020
 	 */
-	private Integer orderId;
+	private String orderId;
 
 	/**
 	 *
@@ -257,7 +257,7 @@ public class CourierOrder {
 	 *
 	 * @mbg.generated Sun Jan 26 18:17:36 CST 2020
 	 */
-	public Integer getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 
@@ -270,7 +270,7 @@ public class CourierOrder {
 	 *
 	 * @mbg.generated Sun Jan 26 18:17:36 CST 2020
 	 */
-	public void setOrderId(Integer orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 

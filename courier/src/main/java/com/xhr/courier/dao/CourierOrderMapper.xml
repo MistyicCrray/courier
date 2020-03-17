@@ -10,7 +10,7 @@
 		<result column="address_id" jdbcType="VARCHAR" property="addressId" />
 		<result column="pickup_code" jdbcType="VARCHAR" property="pickupCode" />
 		<result column="courier" jdbcType="VARCHAR" property="courier" />
-		<result column="order_id" jdbcType="INTEGER" property="orderId" />
+		<result column="order_id" jdbcType="VARCHAR" property="orderId" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="cabinet_time" jdbcType="TIMESTAMP" property="cabinetTime" />
@@ -44,7 +44,7 @@
 		#{addressId,jdbcType=VARCHAR},
 		#{pickupCode,jdbcType=VARCHAR}, 
 		#{courier,jdbcType=VARCHAR},
-		#{orderId,jdbcType=INTEGER},
+		#{orderId,jdbcType=VARCHAR},
 		#{remark,jdbcType=VARCHAR},
 		#{createTime,jdbcType=TIMESTAMP},
 		#{cabinetTime,jdbcType=TIMESTAMP},
@@ -65,7 +65,7 @@
 		address_id = #{addressId,jdbcType=VARCHAR},
 		pickup_code = #{pickupCode,jdbcType=VARCHAR},
 		courier = #{courier,jdbcType=VARCHAR},
-		order_id = #{orderId,jdbcType=INTEGER},
+		order_id = #{orderId,jdbcType=VARCHAR},
 		price = #{price,jdbcType=VARCHAR},
 		remark = #{remark,jdbcType=VARCHAR},
 		create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -180,6 +180,9 @@
 			</if>
 			<if test="status != null and status != ''">
 				and a.status=#{status}
+			</if>
+			<if test="orderId != null and orderId != ''">
+				and a.order_id=#{orderId}
 			</if>
 		</where>
 		order by a.create_time desc

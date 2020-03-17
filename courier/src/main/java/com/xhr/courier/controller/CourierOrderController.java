@@ -222,7 +222,7 @@ public class CourierOrderController {
 
 		// 封装请求支付信息
 		AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
-		model.setOutTradeNo(findById.getId() + "");
+		model.setOutTradeNo(findById.getOrderId() + "");
 		model.setSubject("代领费用");
 		model.setTotalAmount(findById.getPrice());
 		model.setBody("代领费用");
@@ -275,8 +275,14 @@ public class CourierOrderController {
 			System.out.println("异步通知成功");
 			// 商户订单号
 			String out_trade_no = request.getParameter("out_trade_no");
+			map.put("orderId", out_trade_no);
+			List<Map<String,Object>> findList = courierOrderService.findList(map);
+			String id = null;
+			if (findList.size() > 0) {
+				id = findList.get(0).get("id").toString();
+			}
 			// 修改数据库
-			map.put("id", out_trade_no);
+			map.put("id", id);
 			map.put("payStatus", "1"); // 已支付
 			courierOrderService.updateCorier(map);
 		} else {
