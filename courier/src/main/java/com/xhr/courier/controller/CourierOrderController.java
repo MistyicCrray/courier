@@ -284,6 +284,7 @@ public class CourierOrderController {
 			// 修改数据库
 			map.put("id", id);
 			map.put("payStatus", "1"); // 已支付
+			map.put("status", "2"); // 已完成
 			courierOrderService.updateCorier(map);
 		} else {
 			System.out.println("异步通知失败");
