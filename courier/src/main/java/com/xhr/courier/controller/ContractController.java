@@ -18,6 +18,7 @@ import com.xhr.courier.tools.interceptor.LoginRequired;
 import com.xhr.courier.tools.result.Result;
 import com.xhr.courier.tools.result.ResultGenerator;
 import com.xhr.courier.tools.result.TableData;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/contract")
@@ -25,6 +26,8 @@ public class ContractController {
 
 	@Autowired
 	private ContractService contractService;
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@LoginRequired

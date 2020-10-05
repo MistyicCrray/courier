@@ -15,11 +15,11 @@ export const formatDate = (time) => {
 }
 
 //接口地址
-export const baseUrl = 'http://wwwnuhaishduiohkjcc.51vip.biz/'
+export const baseUrl = 'http://wwwnuhaishduiohkjcc.51vip.biz/main/'
 // 图片地址
 export const imgUrl = 'http://wwwnuhaishduiohkjcc.51vip.biz/static/'
 // 图片上传地址
-export const imgUploadUrl = 'http://wwwnuhaishduiohkjcc.51vip.biz/'
+export const imgUploadUrl = 'http://wwwnuhaishduiohkjcc.51vip.biz/main/'
 
 // websocket地址
-export const webSocketUrl = "ws://wwwnuhaishduiohkjcc.51vip.biz/websocket/";
+export const webSocketUrl = "ws://wwwnuhaishduiohkjcc.51vip.biz/main/websocket/";

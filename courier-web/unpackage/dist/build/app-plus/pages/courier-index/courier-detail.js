@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"page { height: 100%; }\n.",[1],"bottom { position: absolute; left: 0; bottom: 0; width: 100%; }\n",],undefined,{path:"./pages/courier-index/courier-detail.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/courier-index/courier-detail.wxml') } }));

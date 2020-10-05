@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"btn-register { margin-top: ",[0,100],"; border-radius: ",[0,50],"; font-size: 16px; color: #fff; background: -webkit-gradient(linear, left top, right top, from(#88a1f9), to(#9ac6ff)); background: -o-linear-gradient(left, #88a1f9, #9ac6ff); background: linear-gradient(to right, #88a1f9, #9ac6ff); }\n",],undefined,{path:"./pages/courier-index/courier-edit.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/courier-index/courier-edit.wxml') } }));

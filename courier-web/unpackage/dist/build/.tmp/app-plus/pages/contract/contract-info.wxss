@@ -1,0 +1,11 @@
+
+.page {
+	height: 100%;
+}
+.my-bottom {
+	margin-bottom: 40rpx;
+}
+.margin-top {
+	margin-top: 100rpx;
+}
+

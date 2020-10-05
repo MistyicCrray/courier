@@ -125,8 +125,14 @@
 						axios.get("/courierOrder/admin/statics").then(function(res) {
 							console.info(res);
 							_this.statics = res.data.data;
+							_this.statics.total = this.toFixed(_this.statics.total, 1)
 						})
-					}
+					},
+					toFixed(number, fractionDigits) {
+						var times = Math.pow(10, fractionDigits);
+						var roundNum = Math.round(number * times) / times;
+						return roundNum.toFixed(fractionDigits);
+					},
 				},
 				mounted: function() {
 					let _this = this; // 声明一个变量指向Vue实例this，保证作用域一致

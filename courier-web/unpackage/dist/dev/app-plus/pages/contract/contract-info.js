@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"page { height: 100%; }\n.",[1],"my-bottom { margin-bottom: ",[0,40],"; }\n.",[1],"margin-top { margin-top: ",[0,100],"; }\n",],undefined,{path:"./pages/contract/contract-info.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/contract/contract-info.wxml') } }));

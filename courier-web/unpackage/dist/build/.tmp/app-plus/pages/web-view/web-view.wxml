@@ -1,0 +1,1 @@
+<view class="content"><web-view src="{{path}}">//这个是自定义页面（htmlA）</web-view></view>
